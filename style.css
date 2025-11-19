@@ -1091,7 +1091,91 @@ body.charter::before {
     display: none;
   }
 }
+/* 페이지 전체 래퍼 */
+.sponsor-page {
+  background: linear-gradient(180deg, #0d1c3d 0%, #000 100%);
+  padding: 40px 0;
+  color: #fff;
+}
 
+/* 섹션 공통 */
+.sponsor-page section {
+  width: 85%;
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+}
+
+/* 소개글 */
+.sponsor-intro h2 {
+  margin-bottom: 20px;
+}
+
+.intro-text {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* 후원하기 버튼 */
+.sponsor-btn {
+  display: inline-block;
+  margin-top: 20px;
+  background: #17368e;
+  padding: 12px 28px;
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s;
+}
+.sponsor-btn:hover {
+  opacity: 0.85;
+}
+
+.how-to {
+  margin-top: 30px;
+}
+.how-to ol {
+  margin-top: 10px;
+  line-height: 1.7;
+}
+
+/* 개인/기업 후원 */
+.support-section h3 {
+  margin-bottom: 25px;
+}
+
+/* 카드 정렬 */
+.tier-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* 카드 스타일 */
+.tier-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.tier-card h4 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tier-card span {
+  font-weight: 600;
+  color: #6ba8ff;
+}
+
+.tier-card ul {
+  padding-left: 20px;
+  line-height: 1.6;
+}
 
 /* ----- 공연일정 페이지 ----- */
 header .intro {
@@ -1468,93 +1552,139 @@ body.calendar-page .calendar {
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.75);
 }
 
+/* ===== 공지사항 목록 ===== */
+.notice-section {
+  padding: 80px 0;
+  text-align: center;
+}
 
-/*-----공지사항 페이지-----*/
-.notice-page {
-  background-color: #000;
-  color: #fff;
-  font-family: 'Noto Sans KR', sans-serif;
-  padding: 2rem 10%;
+.notice-title h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #f0f0f0;
+  transition: opacity 0.3s ease;
 }
 
 .notice-list {
+  max-width: 800px;
+  margin: 0 auto;
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
-.notice-list li {
-  border-bottom: 1px solid #555;
-  padding: 1rem 0;
-}
-
-.notice-list details {
-  display: block;
-}
-
-.notice-list summary {
-  font-size: 1.2rem;
-  cursor: pointer;
-  list-style: none;
-  outline: none;
+.notice-item {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-}
-
-.notice-list summary .number {
-  min-width: 2rem;
-  text-align: right;
+  background: #1e1e2a;
+  padding: 18px 25px;
+  border-radius: 10px;
+  margin-bottom: 12px;
   color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.notice-list summary .title {
-  flex: 1;
+.notice-item:hover {
+  background: #273d8f;
+  transform: scale(1.01);
 }
 
-.notice-list summary .date {
-  margin-left: auto;
-  color: #aaa;
+/* ===== 공지사항 상세 보기 ===== */
+#noticeDetail {
+  display: none;
+  max-width: 800px;
+  margin: 100px auto 0 auto; /* ✅ 메뉴바 아래에서 시작 */
+  text-align: left;
+  color: #fff;
+  animation: fadeIn 0.5s ease;
 }
 
-.notice-list summary::-webkit-details-marker {
+/* 상세 영역 전체 배경 */
+.detail-inner {
+  background: linear-gradient(180deg, #000000 0%, #182255 100%); /* ✅ 위는 검정, 아래는 파랑 */
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  margin-top: 20px;
+}
+
+/* 공지사항 제목 (h2 숨김) */
+.detail-inner h2 {
   display: none;
 }
 
-.notice-list summary:hover {
-  color: #aaa;
+/* 상세 제목 */
+.detail-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #6ea8ff; /* 조금 더 밝은 파랑 */
 }
 
-.notice-list p {
-  margin: 0.5rem 0 0 3rem;
-  line-height: 1.6;
-}
-
-.notice-list details[open] summary .title {
-  color: #3498db; 
-}
-
-.pagination {
+/* 포스터 이미지 영역 */
+.detail-image-wrapper {
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 2rem 0;
-  gap: 0.5rem;
+  margin-bottom: 25px;
 }
 
-.pagination button {
-  background-color: #444;
+/* 포스터 이미지 (3x4 비율 유지) */
+.detail-image {
+  width: 300px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+}
+
+/* 본문 텍스트 */
+.detail-content {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #e3e8ff; /* 조금 푸른 톤의 흰색으로 변경 */
+  white-space: pre-line;
+}
+
+/* 뒤로가기 버튼 */
+.back-btn {
+  display: inline-block;
+  background: #273d8f;
   color: #fff;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
   cursor: pointer;
-  border-radius: 4px;
+  margin-bottom: 25px;
+  transition: background 0.3s ease;
 }
 
-.pagination button:hover {
-  background-color: #666;
+.back-btn:hover {
+  background: #3555d4;
 }
+
+/* 리스트에서 쓰이는 포스터 이미지 */
+.notice-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.notice-image {
+  width: 300px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+/* 페이드 인 효과 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 /*----- 갤러리 페이지 -----*/
 /* gallery-page 전용 */

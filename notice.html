@@ -72,17 +72,24 @@
     </div>
   </header>
 
-  <main>
-    <h2>공지사항</h2>
-    <ul class="notice-list">
-      <!-- JS가 글을 자동으로 생성 -->
-    </ul>
+  <main id="noticeMain">
+    <section class="notice-container" id="noticeContainer">
+      <h2 class="notice-heading">공지사항</h2>
 
-    <div class="pagination">
-      <button id="prevBtn">이전</button>
-      <span id="pageInfo"></span>
-      <button id="nextBtn">다음</button>
-    </div>
+      <ul class="notice-list" id="noticeList">
+        <li class="notice-item" data-id="1">
+          <span class="notice-title">[공연안내] 화성시티발레단 12월 공연 안내</span>
+        </li>
+        <li class="notice-item" data-id="2">
+          <span class="notice-title">[모집] 2025년 겨울 단원 오디션 일정</span>
+        </li>
+        <li class="notice-item" data-id="3">
+          <span class="notice-title">[안내] 발레단 연습실 이전 안내</span>
+        </li>
+      </ul>
+
+      <div class="notice-detail" id="noticeDetail"></div>
+    </section>
   </main>
 
   <footer>
@@ -108,8 +115,7 @@
     </div>
   </footer>
 
-
-  <!-- notice.js 연결 -->
+  <!-- ✅ notice.js 연결 -->
   <script src="data/notice.js"></script>
 </body>
 </html>
