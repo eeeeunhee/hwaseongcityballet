@@ -12,24 +12,16 @@ const slideDuration = parseFloat(
 
 // 슬라이드 전환 함수
 function goToSlide(index) {
-  slides.forEach((slide, i) => {
-    slide.classList.toggle('active', i === index);
-  });
-
-  progressItems.forEach((item, i) => {
-    item.classList.toggle('active', i === index);
-  });
-
+  slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+  progressItems.forEach((item, i) => item.classList.toggle('active', i === index));
   currentSlide = index;
 }
 
-// 다음 슬라이드
 function nextSlide() {
-  let next = (currentSlide + 1) % slides.length;
-  goToSlide(next);
+  goToSlide((currentSlide + 1) % slides.length);
 }
 
-// 진행바 클릭 이벤트
+// 진행바 클릭
 progressItems.forEach((item, index) => {
   item.addEventListener('click', () => {
     clearInterval(slideInterval);
@@ -45,23 +37,30 @@ let lastScrollTop = 0;
 
 window.addEventListener('scroll', () => {
   const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-  if (currentScroll > lastScrollTop) {
-    header.style.transform = 'translateY(-100%)';
-  } else {
-    header.style.transform = 'translateY(0)';
-  }
+  header.style.transform = currentScroll > lastScrollTop ? 'translateY(-100%)' : 'translateY(0)';
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 });
 
 // ================================
-// 모바일 메뉴 클릭 이벤트
-const menuItems = document.querySelectorAll('.menu > li');
+// 햄버거 메뉴
+const menuToggle = document.querySelector('.menu-toggle');
+const navLeft = document.querySelector('.nav-left');
+const menuItems = document.querySelectorAll('.menu > li'); // ✅ 한 번만 선언
 
+// 햄버거 버튼 클릭 시 메뉴 열기/닫기
+menuToggle.addEventListener('click', () => {
+  navLeft.classList.toggle('active');
+});
+
+// 메뉴 아이템 클릭 시 서브 메뉴 열기/닫기
 menuItems.forEach(item => {
   const submenu = item.querySelector('.submenu');
   if (submenu) {
-    item.addEventListener('click', (e) => {
-      if (window.innerWidth <= 720) {
+    item.addEventListener('click', e => {
+      if (window.innerWidth <= 1024) {
+        menuItems.forEach(i => {
+          if (i !== item) i.classList.remove('open');
+        });
         item.classList.toggle('open');
         e.stopPropagation();
       }
@@ -69,10 +68,17 @@ menuItems.forEach(item => {
   }
 });
 
+// 화면 리사이즈 시 메뉴 닫기
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 1024) {
+    navLeft.classList.remove('active');
+    menuItems.forEach(i => i.classList.remove('open'));
+  }
+});
+
 // ================================
 // 스크롤 시 fade-in (IntersectionObserver)
 const scrollElements = document.querySelectorAll('.scroll-fade');
-
 const appearOnScroll = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
@@ -81,90 +87,132 @@ const appearOnScroll = new IntersectionObserver((entries, observer) => {
     }
   });
 }, { threshold: 0.2 });
-
 scrollElements.forEach(el => appearOnScroll.observe(el));
 
 // ================================
-// 공연 일정 렌더링 (최근 공연 위로, 상세 페이지 없이 목록으로 이동)
-document.addEventListener("DOMContentLoaded", function() {
-  const yearSelect = document.getElementById("yearSelect");
-  const monthSelect = document.getElementById("monthSelect");
+// 초기 실행
+window.addEventListener('DOMContentLoaded', () => {
+  if (slides.length > 0) {
+    goToSlide(0);
+    slideInterval = setInterval(nextSlide, slideDuration);
+  }
+
+  renderCalendar();
+});
+
+
+// 공연일정 페이지
+const yearSelect = document.getElementById("yearSelect");
+const monthSelect = document.getElementById("monthSelect");
+
+// 1. 연도 옵션 넣기
+const years = [...new Set(performances.map(p => new Date(p.date).getFullYear()))];
+years.sort((a, b) => b - a); // 최신 순
+years.forEach(year => {
+  const option = document.createElement("option");
+  option.value = year;
+  option.textContent = year;
+  yearSelect.appendChild(option);
+});
+
+// 2. 월 옵션 넣기
+for (let m = 1; m <= 12; m++) {
+  const option = document.createElement("option");
+  option.value = m;
+  option.textContent = m;
+  monthSelect.appendChild(option);
+}
+
+// 3. 선택 시 필터링
+yearSelect.addEventListener("change", renderGrid);
+monthSelect.addEventListener("change", renderGrid);
+
+function renderGrid() {
+  const selectedYear = yearSelect.value;
+  const selectedMonth = monthSelect.value;
+  const filtered = performances.filter(p => {
+    const d = new Date(p.date);
+    return (!selectedYear || d.getFullYear() == selectedYear) &&
+           (!selectedMonth || (d.getMonth() + 1) == selectedMonth);
+  });
+
   const grid = document.getElementById("performanceGrid");
+  grid.innerHTML = ""; // 초기화
 
-  if (!yearSelect || !monthSelect || !grid) return;
+  filtered.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${p.poster}" alt="${p.title}">
+      <div class="card-body">
+        <h3>${p.title}</h3>
+        <p class="info">${p.date} | ${p.place} | ${p.age}</p>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
 
-  function renderPerformances(year, month) {
-    // 문자열을 숫자로 변환
-    year = Number(year);
-    month = Number(month);
+// 초기 렌더링
+renderGrid();
 
-    grid.innerHTML = "";
 
-    // 해당 연월 공연 필터
-    const filtered = performances
-      .filter(p => {
-        const d = new Date(p.date);
-        return d.getFullYear() === year && (d.getMonth() + 1) === month;
-      })
-      .sort((a, b) => new Date(b.date) - new Date(a.date)); // 최신 순
+// 공연상세 페이지
+document.addEventListener("DOMContentLoaded", function() {
+  const yearSelect = document.getElementById('yearSelect');
+  const monthSelect = document.getElementById('monthSelect');
 
-    if (filtered.length === 0) {
-      grid.innerHTML = "<p style='color: var(--muted); text-align:center;'>해당 월에 예정된 공연이 없습니다.</p>";
-      return;
-    }
+  if (!yearSelect || !monthSelect) return;
 
-    // 카드 생성
+  // 2016~2025년
+  const years = [...new Set(performances.map(p => new Date(p.date).getFullYear()))];
+  years.sort((a,b) => b-a); // 최신년 먼저
+  years.forEach(y => {
+    const option = document.createElement('option');
+    option.value = y;
+    option.textContent = y;
+    yearSelect.appendChild(option);
+  });
+
+  // 1~12월
+  for (let m=1; m<=12; m++){
+    const option = document.createElement('option');
+    option.value = m;
+    option.textContent = m + '월';
+    monthSelect.appendChild(option);
+  }
+
+  // 선택 시 공연 필터링
+  function renderGrid() {
+    const grid = document.getElementById('performanceGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const selectedYear = parseInt(yearSelect.value);
+    const selectedMonth = parseInt(monthSelect.value);
+    const filtered = performances.filter(p => {
+      const d = new Date(p.date);
+      return d.getFullYear() === selectedYear && d.getMonth()+1 === selectedMonth;
+    });
     filtered.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "card";
+      const card = document.createElement('div');
+      card.className = 'card';
       card.innerHTML = `
-        <a href="performanceList.html">
-          <img src="${p.poster}" alt="${p.title} 포스터">
-        </a>
+        <img src="${p.poster}" alt="${p.title}">
         <div class="card-body">
-          <h3><a href="performanceList.html" class="title-link">${p.title}</a></h3>
-          <div class="info">${p.date} <br> ${p.place}</div>
-          <a href="performanceList.html" class="btn">자세히 보기</a>
+          <h3>${p.title}</h3>
+          <p class="info">${p.date} | ${p.place}</p>
         </div>
       `;
       grid.appendChild(card);
     });
   }
 
-  // 연도 옵션
-  for (let y = 2025; y >= 2016; y--) {
-    const option = document.createElement("option");
-    option.value = y;
-    option.textContent = y;
-    yearSelect.appendChild(option);
-  }
+  yearSelect.addEventListener('change', renderGrid);
+  monthSelect.addEventListener('change', renderGrid);
 
-  // 월 옵션
-  for (let m = 1; m <= 12; m++) {
-    const option = document.createElement("option");
-    option.value = m;
-    option.textContent = m;
-    monthSelect.appendChild(option);
-  }
-
-  const today = new Date();
-  yearSelect.value = today.getFullYear();
-  monthSelect.value = today.getMonth() + 1;
-
-  // 초기 렌더
-  renderPerformances(yearSelect.value, monthSelect.value);
-
-  // 연도/월 변경 시
-  yearSelect.addEventListener("change", () => renderPerformances(yearSelect.value, monthSelect.value));
-  monthSelect.addEventListener("change", () => renderPerformances(yearSelect.value, monthSelect.value));
+  // 초기값 선택 후 렌더링
+  yearSelect.value = years[0];
+  monthSelect.value = new Date().getMonth()+1;
+  renderGrid();
 });
 
-// ================================
-// 초기 실행 (슬라이드, 캘린더 등)
-window.addEventListener('DOMContentLoaded', () => {
-  if (slides.length > 0) {
-    goToSlide(0);
-    slideInterval = setInterval(nextSlide, slideDuration);
-  }
-  renderCalendar();
-});
