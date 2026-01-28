@@ -130,6 +130,7 @@ monthSelect.addEventListener("change", renderGrid);
 function renderGrid() {
   const selectedYear = yearSelect.value;
   const selectedMonth = monthSelect.value;
+
   const filtered = performances.filter(p => {
     const d = new Date(p.date);
     return (!selectedYear || d.getFullYear() == selectedYear) &&
@@ -137,7 +138,7 @@ function renderGrid() {
   });
 
   const grid = document.getElementById("performanceGrid");
-  grid.innerHTML = ""; // 초기화
+  grid.innerHTML = "";
 
   filtered.forEach(p => {
     const card = document.createElement("div");
@@ -149,70 +150,15 @@ function renderGrid() {
         <p class="info">${p.date} | ${p.place} | ${p.age}</p>
       </div>
     `;
+
+    // ⭐ 추가된 부분: 카드 클릭 → 상세페이지 이동
+    card.addEventListener("click", () => {
+      location.href = `performanceDetail.html?id=${p.id}`;
+    });
+
     grid.appendChild(card);
   });
 }
 
 // 초기 렌더링
 renderGrid();
-
-
-// 공연상세 페이지
-document.addEventListener("DOMContentLoaded", function() {
-  const yearSelect = document.getElementById('yearSelect');
-  const monthSelect = document.getElementById('monthSelect');
-
-  if (!yearSelect || !monthSelect) return;
-
-  // 2016~2025년
-  const years = [...new Set(performances.map(p => new Date(p.date).getFullYear()))];
-  years.sort((a,b) => b-a); // 최신년 먼저
-  years.forEach(y => {
-    const option = document.createElement('option');
-    option.value = y;
-    option.textContent = y;
-    yearSelect.appendChild(option);
-  });
-
-  // 1~12월
-  for (let m=1; m<=12; m++){
-    const option = document.createElement('option');
-    option.value = m;
-    option.textContent = m + '월';
-    monthSelect.appendChild(option);
-  }
-
-  // 선택 시 공연 필터링
-  function renderGrid() {
-    const grid = document.getElementById('performanceGrid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    const selectedYear = parseInt(yearSelect.value);
-    const selectedMonth = parseInt(monthSelect.value);
-    const filtered = performances.filter(p => {
-      const d = new Date(p.date);
-      return d.getFullYear() === selectedYear && d.getMonth()+1 === selectedMonth;
-    });
-    filtered.forEach(p => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <img src="${p.poster}" alt="${p.title}">
-        <div class="card-body">
-          <h3>${p.title}</h3>
-          <p class="info">${p.date} | ${p.place}</p>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
-  }
-
-  yearSelect.addEventListener('change', renderGrid);
-  monthSelect.addEventListener('change', renderGrid);
-
-  // 초기값 선택 후 렌더링
-  yearSelect.value = years[0];
-  monthSelect.value = new Date().getMonth()+1;
-  renderGrid();
-});
-
