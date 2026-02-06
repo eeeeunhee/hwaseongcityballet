@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <strong>오디션 일정</strong>
       일시 : 2026년 3월 21일 (토)
-      장소 : 화성시티발레단 연습실 (화성시 동탄중앙로1길 27, 2층)<br>
+      장소 : 화성시티발레단 연습실 (화성시 동탄공원로1길 27, 2층)<br>
 
       <strong>진행 방법</strong>
       클래스 오디션 진행
