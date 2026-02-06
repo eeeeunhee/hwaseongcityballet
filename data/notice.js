@@ -1,11 +1,79 @@
 document.addEventListener("DOMContentLoaded", () => {
   const noticeListEl = document.querySelector(".notice-list");
   const noticeDetailEl = document.querySelector("#noticeDetail");
-  const pageTitle = document.querySelector(".notice-heading"); // ✅ 수정: 실제 h2 클래스 이름에 맞춤
+  const pageTitle = document.querySelector(".notice-heading"); 
 
   const notices = [
     {
       id: 1,
+      title: "[모집] 2026년 단원 오디션 일정",
+      content: `
+      <strong>당신의 성장이 무대가 되는 곳, 화성시티발레단</strong>
+      화성시티발레단은 현재의 실력보다
+      무대를 향한 태도와 앞으로의 가능성을 봅니다.<br>
+
+      <strong>화성시티발레단 2026 신입 단원 모집</strong><br>
+      화성시티발레단은 발레에 대한 진심과 성장 가능성을 가진 신입 단원을 모집합니다.
+      잠재력과 태도, 무대를 향한 의지를 중심으로 선발하며,
+      졸업 여부와 관계없이 많은 지원을 기다립니다.<br>
+
+      <strong>오디션 일정</strong>
+      일시 : 2026년 3월 21일 (토)
+      장소 : 화성시티발레단 연습실 (화성시 동탄중앙로1길 27, 2층)<br>
+
+      <strong>진행 방법</strong>
+      클래스 오디션 진행
+      - Barre & Center
+      - Pointe (여자)
+      ※ 세부 시간은 추후 개별 공지 예정<br>
+
+      <strong>지원 방법</strong>
+      구글폼을 통한 온라인 지원 (2026년 3월 18일 마감)
+      서류 검토 후 오디션 대상자 개별 안내 예정
+
+      <a href="https://forms.gle/cK5uozcK6jCAUFVo6"
+        class="notice-btn"
+        target="_blank" rel="noopener">
+        <span>구글폼 지원하기</span>
+      </a><br>
+
+      <strong>지원 자격</strong>
+      - 발레 전공자 또는 이에 준하는 실력을 갖춘 자
+      - 학생 및 졸업생 모두 지원 가능
+      - 무대 활동 및 연습에 성실히 참여 가능한 자<br>
+
+      <strong>선발 기준</strong>
+      - 기본 테크닉 및 신체 조건
+      - 표현력, 음악성, 태도
+      - 향후 성장 가능성<br>
+
+      <strong>오디션 준비물</strong>
+      - 남자 : 검정색 타이즈, 흰색 티셔츠, 흰색 슈즈, 흰색 양말
+      - 여자 : 핑크색 타이즈, 레오타드, 슈즈, 토슈즈<br>
+
+      <strong>신청 절차</strong>
+      구글폼 작성 및 제출 → 지원자 이름으로 응시료 입금 →
+      입금 확인 후 접수 완료 문자 발송<br>
+
+      <strong>입금 안내</strong>
+      응시료 : 20,000원
+      예금주 : 화성시티발레단
+      계좌번호 : 신한은행 100-032-641039<br>
+
+      <strong>취소 및 환불 안내</strong>
+      2026년 3월 18일 18시까지 취소 시 응시료 100% 환불
+      이후 취소 시 환불 불가<br>
+
+      <strong>활동 조건</strong>
+      연습 일정 및 급여는 개별 협의 예정<br><br>
+
+      자세한 사항은 이메일로 문의 바랍니다.
+      `,
+      image: "images/화성시티발레단_로고_화이트.png",
+
+    },
+    {
+      id: 2,
       title: "[공연안내] 화성시티발레단 호두까기인형 갈라 공연",
       content: `
         크리스마스의 마법이 무대 위에서 펼쳐집니다.<br><br>
@@ -29,25 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
         지금 바로 인터파크에서 예매하세요!
       `,
       image: "images/2025_40.jpg",
-    },
-    {
-      id: 2,
-      title: "발레단 단원 모집 공고",
-      content: `
-        화성시티발레단에서는 2026 시즌을 함께할 신입 단원을 모집합니다.<br><br>
-        단     장 | 강인숙<br>
-        연습스케줄 | 추후상의 <br><br>
-        지원자격<br>
-        18세 이상 남, 여 발레 전공자<br>
-        발레단 근무 및 결격사유가 없는 자 <br><br>
-        오디션 일시<br>
-        2026년 2월 중 (추후공지예정)<br><br>
-        지원방법<br>
-        이메일 : hsc_ballet@naver.com<br>
-        이력서 및 자기소개서 작성 후 메일로 신청<br><br>
-        자세한 사항은 이메일 문의 바랍니다.
-      `,
-      image: "images/화성시티발레단_로고_화이트.png",
     },
     {
       id: 3,

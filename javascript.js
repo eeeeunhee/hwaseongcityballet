@@ -45,7 +45,7 @@ window.addEventListener('scroll', () => {
 // 햄버거 메뉴
 const menuToggle = document.querySelector('.menu-toggle');
 const navLeft = document.querySelector('.nav-left');
-const menuItems = document.querySelectorAll('.menu > li'); // ✅ 한 번만 선언
+const menuItems = document.querySelectorAll('.menu > li');
 
 // 햄버거 버튼 클릭 시 메뉴 열기/닫기
 menuToggle.addEventListener('click', () => {
@@ -151,7 +151,7 @@ function renderGrid() {
       </div>
     `;
 
-    // ⭐ 추가된 부분: 카드 클릭 → 상세페이지 이동
+    // 카드 클릭 → 상세페이지 이동
     card.addEventListener("click", () => {
       location.href = `performanceDetail.html?id=${p.id}`;
     });

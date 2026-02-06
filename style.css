@@ -21,6 +21,7 @@ body {
   line-height: 1.5; 
   overflow-x: hidden;
   scroll-behavior: smooth;
+  user-select: none;
 }
 
 main {
@@ -155,53 +156,85 @@ h2::after {
 
 /* 메인 비주얼 */
 .hero {
-  height:100vh;
-  position:relative;
-  overflow:hidden;
+  min-height: 100vh;
+  height: auto;
+  position: relative;
+  overflow: visible;
   background: var(--bg);
 }
 
+/* 배경 슬라이드 */
 .hero-slide {
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  transition:opacity 1s ease;
-  opacity:0;
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1s ease;
+  opacity: 0;
 }
-.hero-slide.active { opacity:1; }
+.hero-slide.active {
+  opacity: 1;
+}
 
+/* 어두운 오버레이 */
 .hero-overlay {
-  position:absolute;
-  inset:0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0.6) 90%);
-  z-index:1;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.2) 10%,
+    rgba(0,0,0,0.6) 90%
+  );
+  z-index: 1;
 }
 
+/* =========================
+   PC / 노트북 기본 위치
+   ========================= */
 .hero-text {
-  position:absolute;
-  top:30%; 
-  left:10%;
-  transform:translateY(-30%);
-  z-index:2;
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  transform: translateY(-30%);
+  z-index: 2;
   color: var(--text);
-  max-width:650px;
+  max-width: 650px;
 }
+
+/* =========================
+   모바일 대응
+   ========================= */
+@media (max-width: 768px) {
+  .hero-text {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    padding: 0 20px;
+    margin-top: 120px;
+    max-width: 100%;
+  }
+}
+
+/* 텍스트 스타일 */
 .hero-text h1 {
-  font-family:'Noto Serif KR', serif;
-  font-weight:600;
-  font-size:clamp(32px,4vw,44px);
-  margin-bottom:12px;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 600;
+  font-size: clamp(32px, 4vw, 44px);
+  margin-bottom: 12px;
 }
+
 .hero-text p {
-  font-family:'Noto Serif KR', serif;
-  font-weight:300;
-  font-size:clamp(14px,1.2vw,18px);
-  line-height:1.4;
-  margin:0;
-  opacity:0.85;
-  white-space: nowrap;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: clamp(14px, 1.2vw, 18px);
+  line-height: 1.4;
+  margin: 0;
+  opacity: 0.85;
+  white-space: normal;
+  word-break: keep-all;
 }
+
 
 /* 진행바 */
 .hero-progress {
@@ -299,7 +332,6 @@ h2::after {
   background: none; 
   box-shadow: 0 30px 60px rgba(0,0,0,0.45);
 }
-
 
 .about-text h1 {
   font-family: 'Noto Serif KR', serif;
@@ -1755,6 +1787,50 @@ header .intro {
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
+
+.notice-btn {
+  display: inline-flex;          /* ⭐ inline-flex */
+  align-items: center;
+  justify-content: center;
+
+  width: 260px;
+  height: 54px;
+
+  margin-top: 28px;
+
+  background: linear-gradient(135deg, #4da3ff, #1c5fd4);
+  border-radius: 30px;
+
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(77, 163, 255, 0.35);
+  transition: background 0.25s ease,
+              transform 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+/* 글자 전용 */
+.notice-btn span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  line-height: 1;       
+
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+/* hover 효과 */
+.notice-btn:hover {
+  background: linear-gradient(135deg, #6bb6ff, #2f74e8);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(77, 163, 255, 0.5);
+}
+
+
 
 /* 페이드 인 효과 */
 @keyframes fadeIn {

@@ -38,5 +38,6 @@ const performances = [
   { id: "2025_37", title: "제 5회 화성국제무용페스티벌", date: "2025-03-01", place: "화성아트홀", poster: "images/2025_37.jpg", description: "제 4회 화성무용콩쿠르", duration: "120분", age: "전체 관람가" },
   { id: "2025_38", title: "청소년 발레 페스티벌", date: "2025-08-17", place: "상명아트센터 계당홀", poster: "images/2025_38.png", description: "청소년 발레 공연", duration: "120분", age: "전체 관람가" },
   { id: "2025_39", title: "The Bridge concert", date: "2025-09-28", place: "반석아트홀", poster: "images/2025_39.jpg", description: "장애예술가와 함께하는 문화공연", duration: "120분", age: "전체 관람가" },
-  { id: "2025_40", title: "호두까기 인형 갈라", date: "2025-12-27", place: "반석아트홀", poster: "images/2025_40.jpg", description: "제 4회 화성무용콩쿠르", duration: "120분", age: "전체 관람가" }
+  { id: "2025_40", title: "호두까기 인형 갈라", date: "2025-12-27", place: "반석아트홀", poster: "images/2025_40.jpg", description: "제 4회 화성무용콩쿠르", duration: "120분", age: "전체 관람가" },
+  { id: "2026_41", title: "제6회 코리아국제예술콩쿨", date: "2026-03-14", place: "화성아트홀", poster: "images/2026_41.png", description: "국제예술콩쿨", duration: "340분", age: "전체 관람가" }
 ];
