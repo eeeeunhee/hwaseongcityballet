@@ -154,6 +154,17 @@ h2::after {
 
 #siteHeader:hover{ background: rgba(0,0,0,0.12); backdrop-filter: blur(4px); }
 
+.sns img.blog-icon {
+  width: 42px;
+  height: 42px;
+}
+.sns img.youtube-icon {
+  width: 36px;
+  height: 36px;
+}
+
+
+
 /* 메인 비주얼 */
 .hero {
   min-height: 100vh;
