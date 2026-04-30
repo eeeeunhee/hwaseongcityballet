@@ -43,31 +43,7 @@
     margin-bottom: 20px;
     display: block;
 }
-/* 메인 비주얼 사진 반응형 최적화 */
-@media (max-width: 768px) {
-    .hero {
-        height: auto !important; /* 높이를 고정하지 않고 내용에 맞춤 */
-        min-height: 400px !important; /* 최소 높이만 지정 */
-        aspect-ratio: 4 / 3 !important; /* 모바일에서 사진 비율 강제 지정 */
-    }
 
-    .hero-video-bg, .hero-img {
-        position: relative !important;
-        height: 100% !important;
-        width: 100% !important;
-        object-fit: contain !important; /* 잘리지 않고 사진 전체가 나오게 함 */
-        background-color: #000; /* 빈 공간은 검정색으로 채움 */
-    }
-
-    .hero-content {
-        position: absolute !important;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%); /* 글자를 사진 정중앙으로 */
-        width: 90% !important;
-        margin: 0 !important;
-    }
-}
 .sub-heading { 
     display: block;
     color: var(--point-blue); 
@@ -144,7 +120,7 @@
     display: flex; 
     justify-content: space-between; 
     align-items: flex-end; 
-    margin-bottom: 60px; 
+    margin-bottom: 10px; 
 }
 
 .section-title { 
@@ -187,6 +163,7 @@
     display: flex;
     justify-content: center;
     padding: 0 20px;
+    margin-top: 0 !important;
 }
 
 .main-poster-card {
@@ -204,7 +181,7 @@
 
 /* 2. 포스터 이미지 (움직임 절대 금지) */
 .poster-img-box {
-    flex: 0 0 380px;      /* 옹졸하지 않게 적당한 크기 유지 */
+    flex: 0 0 400px;      /* 옹졸하지 않게 적당한 크기 유지 */
     aspect-ratio: 2 / 3;
     overflow: hidden;
     border-radius: 4px;
@@ -288,18 +265,100 @@
     box-shadow: 0 8px 20px rgba(58, 141, 255, 0.4); /* 그림자 강화 */
 }
 
-/* 5. 반응형 (화면 줄어들 때) */
-@media (max-width: 1024px) {
-    .main-poster-card {
-        gap: 40px;
-        margin: 50px auto;
+@media (max-width: 768px) {
+    /* 1. 최상위 부모: 양옆 여백 최소화 */
+    .main-performance.container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 5px !important;  
+        padding-right: 5px !important; 
+        margin: 0 auto !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
     }
-    .poster-img-box {
-        flex: 0 0 280px; /* 노트북 반 화면 등에서 사진 크기 최적화 */
-    }
-    .poster-text h3 { font-size: 1.8rem; }
-}
 
+    /* 2. 카드 컨테이너: 이미지-글자 사이 간격 (요청대로 살짝 조절) */
+    .main-poster-card {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important; 
+        gap: 20px !important; /* 이미지와 글자 사이 적당한 거리 */
+        width: 100% !important;
+        margin-top: 15px !important;
+    }
+
+    /* 3. 포스터 이미지 크기 (44% 유지하며 최적화) */
+    .poster-img-box {
+        flex: 0 0 44% !important; 
+        max-width: 180px !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+        aspect-ratio: 2 / 3;
+    }
+
+    /* 4. 텍스트 영역: 요소 간 여백 추가 */
+    .poster-text {
+        flex: 1 !important;
+        padding: 0 !important; 
+        margin: 0 !important; 
+        display: flex !important;
+        flex-direction: column !important;
+        min-width: 0 !important; 
+    }
+
+    /* 제목 */
+    .poster-text h3 {
+        font-size: 1.5rem !important;
+        margin: 0 0 8px 0 !important; /* 아래 여백 추가 */
+        line-height: 1.25 !important;
+        word-break: keep-all;
+        width: 100% !important;
+    }
+
+    /* 날짜 및 장소 정보 */
+    .poster-text .date {
+        font-size: 0.9.5rem !important;
+        margin-bottom: 15px !important; /* [여백 추가] 정보와 내용 사이 간격 벌림 */
+        color: #aaa;
+        line-height: 1.4;
+        width: 100% !important;
+    }
+
+    /* 공연 내용 설명 */
+    .poster-text .desc {
+        font-size: 0.9rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 20px !important; /* [여백 추가] 내용과 버튼 사이 간격 벌림 */
+        color: #ccc;
+        word-break: keep-all;
+        width: 100% !important;
+    }
+    /* 5. [수정] 버튼: 가로로 길고 세로는 얇게(슬림하게) */
+    .view-all-btn {
+        display: inline-flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        
+        /* 가로는 시원하게 */
+        width: 100% !important;
+        max-width: 160px !important;
+        min-width: 140px !important;
+        
+        /* [핵심] 세로 두께 조절: 5px로 줄여서 날렵하게 만듦 */
+        padding: 12px 0 !important; 
+        
+        font-size: 0.8rem !important; /* 글자도 살짝 줄임 */
+        font-weight: 500 !important;
+        margin-top: auto; 
+        background-color: #4A90E2 !important;
+        border-radius: 50px !important;
+        white-space: nowrap !important;
+        
+        /* 혹시 버튼 높이가 고정되어 있다면 해제 */
+        height: auto !important;
+        min-height: 0 !important;
+    }
+}
 
 /* --- Values: 공간 분리 --- */
 .main-values { 
